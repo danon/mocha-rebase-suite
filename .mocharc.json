@@ -1,6 +1,7 @@
 {
   "extension": "ts",
   "require": [
-    "ts-node/register"
+    "ts-node/register",
+    "./register.ts"
   ]
 }
