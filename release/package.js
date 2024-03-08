@@ -37,7 +37,11 @@ function removeDirectory(path) {
 }
 
 function buildTypeScript(projects) {
-  spawnSync('yarn', ['run', 'tsc', '--build', ...projects], {stdio: 'inherit', shell: true});
+  const result = spawnSync('yarn', ['run', 'tsc', '--build', ...projects], {shell: true});
+  if (result.status !== 0) {
+    console.log(result.stdout.toString());
+    process.exit(result.status);
+  }
 }
 
 function readJsonFile(path) {
