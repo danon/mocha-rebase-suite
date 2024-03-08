@@ -1,0 +1,12 @@
+{
+  "name": "@riddled/tester",
+  "type": "module",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@types/node": "^20.11.16",
+    "typescript": "^5.3.3"
+  },
+  "main": "./dist/cjs/editor.js",
+  "module": "./dist/esm/editor.js",
+  "types": "./dist/types/editor.d.ts"
+}

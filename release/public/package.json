@@ -1,0 +1,9 @@
+{
+  "name": "@riddled/mocha-rebase-suite",
+  "license": "MIT",
+  "version": null,
+  "main": "./dist/cjs/editor.js",
+  "module": "./dist/esm/editor.js",
+  "types": "./dist/types/editor.d.ts",
+  "dependencies": null
+}
