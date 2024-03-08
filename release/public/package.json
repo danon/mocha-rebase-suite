@@ -1,0 +1,9 @@
+{
+  "name": "@riddled/mocha-rebase-suite",
+  "license": "MIT",
+  "version": null,
+  "main": "./dist/cjs/register.js",
+  "module": "./dist/esm/register.js",
+  "types": "./dist/types/register.d.ts",
+  "dependencies": null
+}
