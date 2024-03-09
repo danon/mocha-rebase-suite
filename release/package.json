@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "dependencies": {
+    "@riddled/ts-release": "^0.0.5",
+    "@types/node": "^20.11.16",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.2"
+  }
+}
