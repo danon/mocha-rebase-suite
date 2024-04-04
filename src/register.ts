@@ -15,7 +15,7 @@ function rebasedSuite(suite: Suite): Suite {
 }
 
 function newSuite(parent: Suite, suites: Suite[]): Suite {
-  const newSuite = new Suite(parent.title);
+  const newSuite = new Suite(parent.title, parent.ctx);
   newSuite.root = true;
   parent.tests.forEach(test => newSuite.addTest(test));
   suites.forEach(suite => newSuite.addSuite(rebasedSuite(suite)));

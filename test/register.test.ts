@@ -1,4 +1,4 @@
-import {test} from "mocha";
+import {Suite, suite, Test, test} from "mocha";
 import {strict as assert} from "node:assert";
 import {grandparentTests, newRoot, orphanTests, parentTests, transform} from "./fixture.ts";
 
@@ -34,4 +34,8 @@ suite('root', () => {
     const {suites: [suite]} = transform(parentTests(''));
     assert(!suite.root);
   });
+});
+
+test('this', function () {
+  this.timeout(10);
 });
