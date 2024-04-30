@@ -39,3 +39,9 @@ suite('root', () => {
 test('this', function () {
   this.timeout(10);
 });
+
+suite('this, suite', function () {
+  test('this', function () {
+    this.timeout(10);
+  });
+});

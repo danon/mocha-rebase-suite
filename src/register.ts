@@ -1,4 +1,4 @@
-import {Runner, Suite} from 'mocha';
+import {type Context, Runner, Suite} from 'mocha';
 
 export function mochaGlobalSetup(this: Runner): void {
   this.suite = rebasedSuite(this.suite);
@@ -7,7 +7,7 @@ export function mochaGlobalSetup(this: Runner): void {
 function rebasedSuite(suite: Suite): Suite {
   const suites = new SuiteMap();
   suite.suites.forEach(suite => {
-    const joined = suites.instance(suite.title);
+    const joined = suites.instance(suite.title, suite.ctx);
     suite.suites.forEach(suite => joined.addSuite(suite));
     suite.tests.forEach(test => joined.addTest(test));
   });
@@ -25,8 +25,8 @@ function newSuite(parent: Suite, suites: Suite[]): Suite {
 class SuiteMap {
   private dictionary: { [key: string]: Suite } = {};
 
-  public instance(title: string): Suite {
-    return this.dictionary[title] = this.dictionary[title] || new Suite(title);
+  public instance(title: string, context: Context): Suite {
+    return this.dictionary[title] = this.dictionary[title] || new Suite(title, context);
   }
 
   public suites(): Suite[] {
