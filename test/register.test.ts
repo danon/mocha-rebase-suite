@@ -36,6 +36,12 @@ suite('root', () => {
   });
 });
 
-test('this', function () {
+test('context', function () {
   this.timeout(10);
+});
+
+suite('context, suite', function () {
+  test('context', function () {
+    this.timeout(10);
+  });
 });
