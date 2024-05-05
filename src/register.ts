@@ -1,4 +1,4 @@
-import {type Context, Runner, Suite} from 'mocha';
+import {type Context, type Hook, Runner, Suite} from 'mocha';
 
 export function mochaGlobalSetup(this: Runner): void {
   this.suite = rebasedSuite(this.suite);
@@ -9,7 +9,7 @@ function rebasedSuite(suite: Suite): Suite {
   suite.suites.forEach(suite => {
     const joined = suites.instance(suite.title, suite.ctx);
     suite.suites.forEach(suite => joined.addSuite(suite));
-    suite.tests.forEach(test => joined.addTest(test));
+    copyTo(suite, joined);
   });
   return newSuite(suite, suites.suites());
 }
@@ -17,9 +17,15 @@ function rebasedSuite(suite: Suite): Suite {
 function newSuite(parent: Suite, suites: Suite[]): Suite {
   const newSuite = new Suite(parent.title, parent.ctx);
   newSuite.root = true;
-  parent.tests.forEach(test => newSuite.addTest(test));
   suites.forEach(suite => newSuite.addSuite(rebasedSuite(suite)));
+  copyTo(parent, newSuite);
   return newSuite;
+}
+
+function copyTo(source: Suite, target: Suite): void {
+  source['_beforeAll'].forEach((hook: Hook) => target.beforeAll(hook.title, hook.fn));
+  source['_beforeEach'].forEach((hook: Hook) => target.beforeEach(hook.title, hook.fn));
+  source.tests.forEach(test => target.addTest(test));
 }
 
 class SuiteMap {

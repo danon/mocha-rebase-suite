@@ -1,4 +1,4 @@
-import {Suite, suite, Test, test} from "mocha";
+import {setup, suite, suiteSetup, test} from "mocha";
 import {strict as assert} from "node:assert";
 import {grandparentTests, newRoot, orphanTests, parentTests, transform} from "./fixture.ts";
 
@@ -43,5 +43,19 @@ test('context', function () {
 suite('context, suite', function () {
   test('context', function () {
     this.timeout(10);
+  });
+});
+
+suite('hooks', function () {
+  suite('before each', function () {
+    let called = false;
+    setup(() => called = true);
+    test('test', () => assert(called));
+  });
+
+  suite('before all', function () {
+    let called = false;
+    suiteSetup(() => called = true);
+    test('test', () => assert(called));
   });
 });
