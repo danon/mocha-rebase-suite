@@ -1,4 +1,4 @@
-import {setup, suite, suiteSetup, test} from "mocha";
+import {after, setup, suite, suiteSetup, suiteTeardown, teardown, test} from "mocha";
 import {strict as assert} from "node:assert";
 import {grandparentTests, newRoot, orphanTests, parentTests, transform} from "./fixture.ts";
 
@@ -57,5 +57,23 @@ suite('hooks', function () {
     let called = false;
     suiteSetup(() => called = true);
     test('test', () => assert(called));
+  });
+
+  suite('after each', function () {
+    let called = false;
+    teardown(() => called = true);
+    test('ignore', () => null);
+    test('check', () => assert(called));
+  });
+
+  suite('after all', function () {
+    let called = false;
+    suite('suite under test', () => {
+      suiteTeardown(() => called = true);
+      test('ignore', () => null);
+    });
+    suite('other', () => {
+      test('check', () => assert(called));
+    });
   });
 });
