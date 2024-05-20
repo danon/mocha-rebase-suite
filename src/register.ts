@@ -2,6 +2,7 @@ import {type Context, type Hook, Runner, Suite} from 'mocha';
 
 export function mochaGlobalSetup(this: Runner): void {
   this.suite = rebasedSuite(this.suite);
+  this.suite.root = true;
 }
 
 function rebasedSuite(suite: Suite): Suite {
@@ -16,7 +17,6 @@ function rebasedSuite(suite: Suite): Suite {
 
 function newSuite(parent: Suite, suites: Suite[]): Suite {
   const newSuite = new Suite(parent.title, parent.ctx);
-  newSuite.root = true;
   suites.forEach(suite => newSuite.addSuite(rebasedSuite(suite)));
   copyTo(parent, newSuite);
   return newSuite;
