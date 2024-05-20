@@ -1,4 +1,4 @@
-import {after, setup, suite, suiteSetup, suiteTeardown, teardown, test} from "mocha";
+import {setup, type Suite, suite, suiteSetup, suiteTeardown, teardown, test} from "mocha";
 import {strict as assert} from "node:assert";
 import {grandparentTests, newRoot, orphanTests, parentTests, transform} from "./fixture.ts";
 
@@ -75,5 +75,25 @@ suite('hooks', function () {
     suite('other', () => {
       test('check', () => assert(called));
     });
+  });
+});
+
+suite('timeout', function (this: Suite) {
+  this.timeout(10100);
+  test('should retain timeout', () => assert.equal(this.timeout(), 10100));
+
+  suite('nest', function (this: Suite) {
+    this.timeout(10200);
+    test('should nested retain timeout', () => assert.equal(this.timeout(), 10200));
+  });
+});
+
+suite('retries', function (this: Suite) {
+  this.retries(7);
+  test('should retain retries', () => assert.equal(this.retries(), 7));
+
+  suite('nested', function (this: Suite) {
+    this.retries(4);
+    test('should retain retries', () => assert.equal(this.retries(), 4));
   });
 });

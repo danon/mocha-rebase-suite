@@ -9,7 +9,10 @@ function rebasedSuite(suite: Suite): Suite {
   const suites = new SuiteMap();
   suite.suites.forEach(suite => {
     const joined = suites.instance(suite.title, suite.ctx);
-    suite.suites.forEach(suite => joined.addSuite(suite));
+    suite.suites.forEach(suite => {
+      suite.parent = joined;
+      joined.suites.push(suite);
+    });
     copyTo(suite, joined);
   });
   return newSuite(suite, suites.suites());
