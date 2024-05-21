@@ -26,6 +26,7 @@ function newSuite(parent: Suite, suites: Suite[]): Suite {
 }
 
 function copyTo(source: Suite, target: Suite): void {
+  target.timeout(source.timeout());
   source['_beforeAll'].forEach((hook: Hook) => target.beforeAll(hook.title, hook.fn));
   source['_beforeEach'].forEach((hook: Hook) => target.beforeEach(hook.title, hook.fn));
   source['_afterEach'].forEach((hook: Hook) => target.afterEach(hook.title, hook.fn));

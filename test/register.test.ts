@@ -97,3 +97,14 @@ suite('retries', function (this: Suite) {
     test('should retain retries', () => assert.equal(this.retries(), 4));
   });
 });
+
+suite('timeout in hook', function (this: Suite) {
+  this.timeout(6000);
+  suiteTeardown(() => wait(4000));
+  test('dummy', () => {
+  });
+});
+
+function wait(timeout: number): Promise<void> {
+  return new Promise(resolve => setTimeout(() => resolve(), timeout));
+}
